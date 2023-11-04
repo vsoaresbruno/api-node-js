@@ -90,7 +90,123 @@ router.post("/", (req, res, next) => {
   );
 });
 
+router.put("/:id", (req, res, next) => {
+  pieRepo.getById(req.params.id, (data) => {
+    if (!data) {
+      res.status(404).json({
+        status: 404,
+        statusText: "Not found",
+        message: `The pie ${req.params.id} does't exists`,
+        error: {
+          code: "NOT_FOUND",
+          message: `The pie ${req.params.id} does't exists`,
+        },
+      });
+    }
+    pieRepo.update(
+      req.body,
+      req.params.id,
+      (data) => {
+        res.status(200).json({
+          status: 200,
+          statusText: "OK",
+          message: `Pie ${req.params.id} updated`,
+          data,
+        });
+      },
+      (err) => {
+        next(err);
+      }
+    );
+  });
+});
+
+router.patch("/:id", (req, res, next) => {
+  pieRepo.getById(req.params.id, (data) => {
+    if (!data) {
+      res.status(404).json({
+        status: 404,
+        statusText: "Not found",
+        message: `The pie ${req.params.id} does't exists`,
+        error: {
+          code: "NOT_FOUND",
+          message: `The pie ${req.params.id} does't exists`,
+        },
+      });
+    }
+    pieRepo.update(
+      req.body,
+      req.params.id,
+      (data) => {
+        res.status(200).json({
+          status: 200,
+          statusText: "OK",
+          message: `Pie ${req.params.id} updated`,
+          data,
+        });
+      },
+      (err) => {
+        next(err);
+      }
+    );
+  });
+});
+
+router.delete("/:id", (req, res, next) => {
+  pieRepo.getById(req.params.id, (data) => {
+    if (!data) {
+      res.status(404).json({
+        status: 404,
+        statusText: "Not found",
+        message: `The pie ${req.params.id} does't exists`,
+        error: {
+          code: "NOT_FOUND",
+          message: `The pie ${req.params.id} does't exists`,
+        },
+      });
+    }
+    pieRepo.delete(
+      req.params.id,
+      (data) => {
+        res.status(200).json({
+          status: 200,
+          statusText: "OK",
+          message: `Pie ${req.params.id} is deleted`,
+          data: `Pie ${req.params.id}  deleted`,
+        });
+      },
+      (err) => {
+        next(err);
+      }
+    );
+  });
+});
+
 app.use("/api/", router);
+
+const errorBuilder = (err) => {
+  return {
+    status: 500,
+    statusText: "Internal server error",
+    message: err.message,
+    error: {
+      code: "INTERNAL_SERVER_ERROR",
+      errno: err.errno,
+      call: err.syscall,
+      message: err.message,
+    },
+  };
+};
+// exception logger
+app.use((err, req, res, next) => {
+  console.log(errorBuilder(err));
+  next(err);
+});
+
+// exception middleware last
+app.use((err, req, res, next) => {
+  res.status(500).json(errorBuilder(err));
+});
 
 var server = app.listen(3000, () =>
   console.log("Node server is running on http://localhost:3000")
