@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Apple",
+    "wholePrice": 19.99,
+    "slicePrice": 4.99,
+    "sliceCalories": 67,
+    "imageUrl": "images/apple.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Cherry",
+    "wholePrice": 16.99,
+    "slicePrice": 1.99,
+    "sliceCalories": 22,
+    "imageUrl": "images/Cherry.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Banana",
+    "wholePrice": 17.99,
+    "slicePrice": 2.99,
+    "sliceCalories": 82,
+    "imageUrl": "images/Banana.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Pumpikin",
+    "wholePrice": 6.99,
+    "slicePrice": 0.99,
+    "sliceCalories": 18,
+    "imageUrl": "images/Pumpikin.jpg"
+  }
+]
